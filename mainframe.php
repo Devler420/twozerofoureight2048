@@ -6,26 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2048</title>
     <link rel="stylesheet" href="style.css">
-    <script src="cal.js"></script>
+    <script language="JavaScript" type="text/javascript" src="cal.js"></script>
 </head>
-<body>
-    <div class="mainframe">
-        <div class="box" id="x0,0" style="top: 10px; left: 10px;">
-            
-        </div>
-        <div class="box" id="x0,1" style="top: 10px; left: 70px;">
-            
-        </div>
+<body onload="RandomGenBlock()">
+    <div id="mainframe" onkeydown="move(e)">
+        <div class="box" id="x0,0" style="top: 10px; left: 10px;"></div>
+        <div class="box" id="x0,1" style="top: 10px; left: 70px;"></div>
         <div class="box" id="x0,2" style="top: 10px; left: 130px;"></div>
         <div class="box" id="x0,3" style="top: 10px; left: 190px;"></div>
         <div class="box" id="x1,0" style="top: 70px; left: 10px;"></div>
         <div class="box" id="x1,1" style="top: 70px; left: 70px;"></div>
-        <div class="box" id="x1,2" style="top: 70px; left: 130px;">
-            <div class="innerbox" style="top: 70px; left: 130px;">2</div>
-        </div>
-        <div class="box" id="x1,3" style="top: 70px; left: 190px;">
-            
-        </div>
+        <div class="box" id="x1,2" style="top: 70px; left: 130px;"></div>
+        <div class="box" id="x1,3" style="top: 70px; left: 190px;"></div>
         <div class="box" id="x2,0" style="top: 130px; left: 10px;"></div>
         <div class="box" id="x2,1" style="top: 130px; left: 70px;"></div>
         <div class="box" id="x2,2" style="top: 130px; left: 130px;"></div>
