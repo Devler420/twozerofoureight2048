@@ -1,6 +1,7 @@
-
+// i = rows , j = columns
 var notEmptyinnerbox = [];
-// document.onkeydown = move(e);
+document.onkeydown = move;
+
 function RandomGenBlock()
 {
     var mainNode = document.getElementById('mainframe');
@@ -17,19 +18,23 @@ function RandomGenBlock()
         innerboxPos(node,i,j);
         notEmptyinnerbox.push("t"+i+","+j);
         mainNode.appendChild(node);
+        console.log("i : "+i+"////j : "+j);
     }
     else
     {
         RandomGenBlock();
     }
-    console.log(notEmptyinnerbox)
+    // console.log(notEmptyinnerbox);
 }
 function move(e)
 {
     e = e || window.event;
     if (e.keyCode == '38') //Up
     {
+        console.log("Array Start : "+notEmptyinnerbox);
+        moveUp();
         RandomGenBlock();
+        console.log("Array End : "+notEmptyinnerbox);
     }
     else if (e.keyCode == '40') //Down
     {
@@ -45,6 +50,112 @@ function move(e)
     }
 }
 
+function moveUp()
+{
+    var decoynotEmptyinnerbox = notEmptyinnerbox;
+    for (var h = 0 ; h < decoynotEmptyinnerbox.length ; h++)
+    {
+        console.log(decoynotEmptyinnerbox[h]);
+        var i,j;
+        var splitResult = decoynotEmptyinnerbox[h].split(",");
+        i = splitResult[0].replace( /^\D+/g, '');
+        j = splitResult[1];
+
+        var k = i;
+        while(i != 0 && notEmptyinnerbox.includes("t"+(k-1)+","+j) == false && k > 0)
+        {
+            k--;
+        }
+        // console.log(k);
+        
+        var startNode = document.getElementById('t'+i+','+j);
+        var endNode = document.getElementById("t"+k+","+j);
+        if(notEmptyinnerbox.includes("t"+(k-1)+","+j) && i != 0)
+        {
+            if(startNode.innerHTML == document.getElementById("t"+(k-1)+","+j).innerHTML)
+            {
+                var resultNum = parseInt(startNode.innerHTML)+parseInt(document.getElementById("t"+(k-1)+","+j).innerHTML);
+                startNode.innerHTML = resultNum;
+
+                var ind2 = notEmptyinnerbox.indexOf('t'+(k-1)+','+j);
+                document.getElementById("t"+(k-1)+","+j).remove();
+                notEmptyinnerbox.splice(ind2,1);
+
+                var ind = notEmptyinnerbox.indexOf('t'+i+','+j);
+    
+                startNode.setAttribute("id","t"+(k-1)+","+j);
+                innerboxPos(startNode,(k-1),j);
+    
+                if (ind > -1)
+                {
+                    notEmptyinnerbox.splice(ind,1,"t"+(k-1)+","+j);
+                }
+            }
+            else
+            {
+                if(i != 0 && notEmptyinnerbox.includes("t"+k+","+j) == false)
+                {
+                    var node = document.getElementById('t'+i+','+j);
+
+                    var ind = notEmptyinnerbox.indexOf('t'+i+','+j);
+
+                    node.setAttribute("id","t"+k+","+j);
+                    innerboxPos(node,k,j);
+                    
+                    // console.log(node.getBoundingClientRect().top)
+                    // transitionofBlock(i,j)
+                    // transitionofBlock(i-1,j)
+                    if (ind > -1)
+                    {
+                        notEmptyinnerbox.splice(ind,1,"t"+k+","+j);
+                    }
+                }
+            }
+            
+        }
+        else
+        {
+            if(i != 0 && notEmptyinnerbox.includes("t"+k+","+j) == false)
+            {
+                var node = document.getElementById('t'+i+','+j);
+
+                var ind = notEmptyinnerbox.indexOf('t'+i+','+j);
+
+                node.setAttribute("id","t"+k+","+j);
+                innerboxPos(node,k,j);
+                
+                if (ind > -1)
+                {
+                    notEmptyinnerbox.splice(ind,1,"t"+k+","+j);
+                }
+            }
+        }
+        
+        
+    }
+    // console.log(notEmptyinnerbox)
+}
+
+// function transitionofBlock(xi, xj)
+// {
+//     var block = document.getElementById("t"+xi+","+xj);
+//     var rect_block = block.getBoundingClientRect();
+//     console.log(rect_block.top,rect_block.left);
+// }
+
+function mergeBlock()
+{
+    var startBlock = document.getElementById('t1,2');
+    var endblock = document.getElementById('t0,2');
+    if(startBlock.innerHTML == endblock.innerHTML)
+    {
+        endblock.innerHTML = startblock.innerHTML + endblock.innerHTML;
+    }
+    else if(startBlock.innerHTML != endblock.innerHTML)
+    {
+
+    }
+}
 
 function innerboxPos(xnode ,i,j)
 {
