@@ -18,7 +18,7 @@ function RandomGenBlock()
         innerboxPos(node,i,j);
         notEmptyinnerbox.push("t"+i+","+j);
         mainNode.appendChild(node);
-        console.log("i : "+i+"////j : "+j);
+        // console.log("i : "+i+"////j : "+j);
     }
     else
     {
@@ -52,9 +52,11 @@ function move(e)
 
 function moveUp()
 {
-    var decoynotEmptyinnerbox = notEmptyinnerbox;
+    var decoynotEmptyinnerbox = notEmptyinnerbox.slice();
+    console.log("Array Length : "+decoynotEmptyinnerbox.length);
     for (var h = 0 ; h < decoynotEmptyinnerbox.length ; h++)
     {
+        console.log(h);
         console.log(decoynotEmptyinnerbox[h]);
         var i,j;
         var splitResult = decoynotEmptyinnerbox[h].split(",");
