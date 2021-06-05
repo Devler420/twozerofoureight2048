@@ -33,7 +33,7 @@ function move(e)
     {
         console.log("Array Start : "+notEmptyinnerbox);
         moveUp();
-        RandomGenBlock();
+        // RandomGenBlock();
         console.log("Array End : "+notEmptyinnerbox);
     }
     else if (e.keyCode == '40') //Down
@@ -52,6 +52,10 @@ function move(e)
 
 function moveUp()
 {
+    if(checkMovePossibleTop() == false)
+    {
+        return;
+    }
     var decoynotEmptyinnerbox = notEmptyinnerbox.slice();
     console.log("Array Length : "+decoynotEmptyinnerbox.length);
     for (var h = 0 ; h < decoynotEmptyinnerbox.length ; h++)
@@ -64,6 +68,7 @@ function moveUp()
         j = splitResult[1];
 
         var k = i;
+        //if upper block is empty then k--
         while(i != 0 && notEmptyinnerbox.includes("t"+(k-1)+","+j) == false && k > 0)
         {
             k--;
@@ -72,10 +77,19 @@ function moveUp()
         
         var startNode = document.getElementById('t'+i+','+j);
         var endNode = document.getElementById("t"+k+","+j);
+        // console.log("Start Node = "+startNode)
+        // console.log("End Node = "+endNode)
+        
+        if(i == 0)
+        {
+            continue;
+        }
+
         if(notEmptyinnerbox.includes("t"+(k-1)+","+j) && i != 0)
         {
             if(startNode.innerHTML == document.getElementById("t"+(k-1)+","+j).innerHTML)
             {
+                transitionofBlock(i, j, (k-1), j);
                 var resultNum = parseInt(startNode.innerHTML)+parseInt(document.getElementById("t"+(k-1)+","+j).innerHTML);
                 startNode.innerHTML = resultNum;
 
@@ -97,6 +111,7 @@ function moveUp()
             {
                 if(i != 0 && notEmptyinnerbox.includes("t"+k+","+j) == false)
                 {
+                    transitionofBlock(i, j, (k), j);
                     var node = document.getElementById('t'+i+','+j);
 
                     var ind = notEmptyinnerbox.indexOf('t'+i+','+j);
@@ -119,6 +134,7 @@ function moveUp()
         {
             if(i != 0 && notEmptyinnerbox.includes("t"+k+","+j) == false)
             {
+                transitionofBlock(i, j, (k), j);
                 var node = document.getElementById('t'+i+','+j);
 
                 var ind = notEmptyinnerbox.indexOf('t'+i+','+j);
@@ -132,18 +148,133 @@ function moveUp()
                 }
             }
         }
-        
-        
     }
-    // console.log(notEmptyinnerbox)
+    RandomGenBlock();
 }
 
-// function transitionofBlock(xi, xj)
-// {
-//     var block = document.getElementById("t"+xi+","+xj);
-//     var rect_block = block.getBoundingClientRect();
-//     console.log(rect_block.top,rect_block.left);
-// }
+function transitionofBlock(starti, startj, endi, endj)
+{
+    var startblock1 = getTransitionPos(starti,startj);
+    var endblock1 = getTransitionPos(endi,endj)
+    var startblockPosTop = startblock1[0];
+    var startblockPosLeft = startblock1[1];
+    var endblockPosTop = endblock1[0];
+    var endblockPosLeft = endblock1[1];
+
+    var id = null;
+    var id2 = null;
+    var id3 = null;
+    var id4 = null;
+
+    var startblock = document.getElementById("t"+starti+","+startj);
+   //var endblock = document.getElementById("t"+endi+","+endj);
+    var start_rect_block = startblock.getBoundingClientRect();
+
+    if(startblockPosTop > endblockPosTop)
+    {
+        id = setInterval(frame, 1);
+        function frame() 
+        {
+            if (startblockPosTop == endblockPosTop) 
+            {
+                clearInterval(id);
+            } 
+            else 
+            {
+                startblockPosTop = startblockPosTop - 5;
+                startblock.style.top = startblockPosTop +"px";
+            }
+        }
+    }
+    if(startblockPosTop < endblockPosTop)
+    {
+        id2 = setInterval(frame2, 1);
+        function frame2() 
+        {
+            if (startblockPosTop == endblockPosTop) 
+            {
+                clearInterval(id2);
+            } 
+            else 
+            {
+                startblockPosTop = startblockPosTop + 5;
+                startblock.style.top = startblockPosTop +"px";
+            }
+        }
+    }
+    if(startblockPosLeft > endblockPosLeft)
+    {
+        id3 = setInterval(frame3, 1);
+        function frame3() 
+        {
+            if (startblockPosLeft == endblockPosLeft)
+            {
+                clearInterval(id3);
+            }
+            else
+            {
+                startblockPosLeft = startblockPosLeft - 5;
+                startblock.style.left = startblockPosLeft +"px";
+            }
+        }
+    }
+    if(startblockPosLeft < endblockPosLeft)
+    {
+        id4 = setInterval(frame4, 1);
+        function frame4() 
+        {
+            if (startblockPosLeft == endblockPosLeft)
+            {
+                clearInterval(id4);
+            }
+            else
+            {
+                startblockPosLeft = startblockPosLeft + 5;
+                startblock.style.left = startblockPosLeft +"px";
+            }
+        }
+    }
+}
+
+function checkMovePossibleTop()
+{
+    var countUnmovableBlock = 0;
+    for (var h = 0 ; h < notEmptyinnerbox.length ; h++)
+    {
+        var i,j;
+        var splitResult = notEmptyinnerbox[h].split(",");
+        i = splitResult[0].replace( /^\D+/g, '');
+        j = splitResult[1];
+
+        var startNode = document.getElementById('t'+i+','+j);
+        if (i == 0)
+        {
+            countUnmovableBlock++;
+            continue;
+        }
+
+        var k = i;
+        //if upper block is empty then k--
+        while(notEmptyinnerbox.includes("t"+(k-1)+","+j) == false && k > 0)
+        {
+            k--;
+        }
+
+        if (k == i && ((parseInt(document.getElementById("t"+(i-1)+","+j).innerHTML) != parseInt(startNode.innerHTML))))
+        {
+            countUnmovableBlock++;
+            continue;
+        }
+    }
+    if (countUnmovableBlock == notEmptyinnerbox.length)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
 
 function mergeBlock()
 {
@@ -240,5 +371,74 @@ function innerboxPos(xnode ,i,j)
     {
         xnode.style.top = "190px";
         xnode.style.left = "190px";
+    }
+}
+
+function getTransitionPos(i,j)
+{
+    // return Array(top,left)
+    if (i == 0 && j == 0)
+    {
+        return Array(10,10);
+    }
+    else if (i == 0 && j == 1)
+    {
+        return Array(10,70);
+    }
+    else if (i == 0 && j == 2)
+    {
+        return Array(10,130);
+    }
+    else if (i == 0 && j == 3)
+    {
+        return Array(10,190);
+    }
+    else if (i == 1 && j == 0)
+    {
+        return Array(70,10);
+    }
+    else if (i == 1 && j == 1)
+    {
+        return Array(70,70);
+    }
+    else if (i == 1 && j == 2)
+    {
+        return Array(70,130);
+    }
+    else if (i == 1 && j == 3)
+    {
+        return Array(70,190);
+    }
+    else if (i == 2 && j == 0)
+    {
+        return Array(130,10);
+    }
+    else if (i == 2 && j == 1)
+    {
+        return Array(130,70);
+    }
+    else if (i == 2 && j == 2)
+    {
+        return Array(130,130);
+    }
+    else if (i == 2 && j == 3)
+    {
+        return Array(130,190);
+    }
+    else if (i == 3 && j == 0)
+    {
+        return Array(190,10);
+    }
+    else if (i == 3 && j == 1)
+    {
+        return Array(190,70);
+    }
+    else if (i == 3 && j == 2)
+    {
+        return Array(190,130);
+    }
+    else if (i == 3 && j == 3)
+    {
+        return Array(190,190);
     }
 }
