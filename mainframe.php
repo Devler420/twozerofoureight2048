@@ -7,6 +7,7 @@
     <title>2048</title>
     <link rel="stylesheet" href="style.css">
     <script language="JavaScript" type="text/javascript" src="cal.js"></script>
+    <script src="jquery-3.6.0.min.js"></script>
 </head>
 <body onload="RandomGenBlock()">
     <div id="mainframe" onkeydown="move(e)">
@@ -26,6 +27,13 @@
         <div class="box" id="x3,1" style="top: 190px; left: 70px;"></div>
         <div class="box" id="x3,2" style="top: 190px; left: 130px;"></div>
         <div class="box" id="x3,3" style="top: 190px; left: 190px;"></div>
+    </div>
+    <div>
+        <button id="newgamebtn" onclick="newGame()">NEW GAME</button>
+    </div>
+    <div class="score-container">
+        <div id="score-text">Score</div>
+        <div id="score">0</div>
     </div>
 </body>
 </html>
