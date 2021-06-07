@@ -34,24 +34,24 @@ function move(e)
     if (e.keyCode == '38') //Up
     {
         // console.log("Array Start : "+notEmptyinnerbox);
-        moveUp();
         checkEndGame();
+        moveUp();
         // console.log("Array End : "+notEmptyinnerbox);
     }
     else if (e.keyCode == '40') //Down
     {
-        moveDown();
         checkEndGame();
+        moveDown();
     }
     else if (e.keyCode == '37') //Left
     {
-        moveLeft();
         checkEndGame();
+        moveLeft();
     }
     else if (e.keyCode == '39') //Right
     {
-        moveRight();
         checkEndGame();
+        moveRight();
     }
 }
 
