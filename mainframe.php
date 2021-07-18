@@ -36,4 +36,9 @@
         <div id="score">0</div>
     </div>
 </body>
+<footer>
+    <div>
+        <p>Created by Panupong Utvichai</p>
+    </div>
+</footer>
 </html>

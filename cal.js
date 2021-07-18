@@ -115,6 +115,7 @@ function moveUp()
                 score += resultNum;
                 $(document).ready(function() {
                     $("#score").html(score);
+                    setColor(resultNum,(parseInt(k)-1),j);
                 });
                 mergeBlockAnimation((parseInt(k)-1),j);
             }
@@ -228,6 +229,7 @@ function moveDown()
                 score += resultNum;
                 $(document).ready(function() {
                     $("#score").html(score);
+                    setColor(resultNum,(parseInt(k)+1),j);
                 });
                 mergeBlockAnimation((parseInt(k)+1),j);
             }
@@ -341,6 +343,7 @@ function moveLeft()
                 score += resultNum;
                 $(document).ready(function() {
                     $("#score").html(score);
+                    setColor(resultNum,i,(parseInt(k)-1));
                 });
                 mergeBlockAnimation(i,(parseInt(k)-1));
             }
@@ -454,6 +457,7 @@ function moveRight()
                 score += resultNum;
                 $(document).ready(function() {
                     $("#score").html(score);
+                    setColor(resultNum,i,(parseInt(k)+1));
                 });
                 mergeBlockAnimation(i,(parseInt(k)+1));
             }
@@ -1003,4 +1007,43 @@ function newGame()
         $("#score").html(score);
     });
     RandomGenBlock();
+}
+
+function setColor(num,i,j)
+{
+    var x = num;
+    switch (x) {
+        case (x=4):
+            $("#t"+i+"\\,"+j).css("background-color", "rgb(255, 218, 185)");
+          break;
+        case (x=8):
+            $("#t"+i+"\\,"+j).css("background-color", "rgb(244, 164, 96)");
+          break;
+        case (x=16):
+            $("#t"+i+"\\,"+j).css("background-color", "rgb(210, 105, 30)");
+          break;
+        case (x=32):
+            $("#t"+i+"\\,"+j).css("background-color", "rgb(255, 69, 0)");
+          break;
+        case (x=64):
+            $("#t"+i+"\\,"+j).css("background-color", "rgb(255, 0, 0)");
+          break;
+        case (x=128):
+            $("#t"+i+"\\,"+j).css("background-color", "rgb(255, 215, 0)");
+          break;
+        case (x=256):
+            $("#t"+i+"\\,"+j).css("background-color", "rgb(124, 252, 0)");
+          break;
+        case (x=512):
+            $("#t"+i+"\\,"+j).css("background-color", "rgb(0, 128, 0)");
+          break;
+        case (x=1024):
+            $("#t"+i+"\\,"+j).css("background-color", "rgb(30, 144, 255)");
+          break;
+        case (x=2048):
+            $("#t"+i+"\\,"+j).css("background-color", "rgb(147, 112, 219)");
+          break;
+        case (x=4196):
+            $("#t"+i+"\\,"+j).css("background-color", "rgb(255, 0, 255)");
+      }
 }
